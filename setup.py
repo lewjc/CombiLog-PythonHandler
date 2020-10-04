@@ -8,7 +8,7 @@ setuptools.setup(
     version="1.0.0",
     author="Lewis Cummins",
     author_email="lewisjcummins@hotmail.co.uk",
-    description="Interfaces with inbuilt python logger to send logs to aggregator.",
+    description="Interfaces with inbuilt python logger to send logs to combilog aggregator.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/lewjc/combilog-python",

@@ -45,9 +45,9 @@ class CombilogHandler(Handler):
         def on_open(ws: WebSocket):
             self._retry_timer.cancel()
             print("Combilog connection opened.")
-            if not self._message_queue.empty():
-                while not self._message_queue.empty():
-                    ws.send(json.dumps(self._message_queue.get()))
+            # if not self._message_queue.empty():
+            #     while not self._message_queue.empty():
+            #         ws.send(json.dumps(self._message_queue.get()))
 
         return on_open
 
@@ -63,7 +63,7 @@ class CombilogHandler(Handler):
 
         return on_close
 
-    def _generate_on_error(self) -> on_error:
+    def _generate_on_error(self):
         def on_error(ws: WebSocketApp, error: str):
             print("Combilog aggreagtor connection errored: " + error)
             threading.Timer(5, self._retry_connect).start()
