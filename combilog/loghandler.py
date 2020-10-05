@@ -45,9 +45,9 @@ class CombilogHandler(Handler):
         def on_open(ws: WebSocket):
             self._retry_timer.cancel()
             print("Combilog connection opened.")
-            # if not self._message_queue.empty():
-            #     while not self._message_queue.empty():
-            #         ws.send(json.dumps(self._message_queue.get()))
+            if not self._message_queue.empty():
+                while not self._message_queue.empty():
+                    ws.send(json.dumps(self._message_queue.get()))
 
         return on_open
 
