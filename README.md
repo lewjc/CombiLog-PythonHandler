@@ -5,7 +5,7 @@ Python package containing custom log handler to integrate with CombiLog
 ## Installation
 
 ```
-$ pip install combilog
+$ pip install combilog-handler
 ```
 
 ## Usage Guide
