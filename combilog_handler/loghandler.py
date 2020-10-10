@@ -5,7 +5,7 @@ import threading
 import asyncio
 import time
 from queue import Queue
-from combilog.socketerror import get_closure_error
+from combilog_handler.socketerror import get_closure_error
 
 
 class CombilogHandler(Handler):
