@@ -17,7 +17,7 @@ import logging
 import combilog.loghandler
 
 # Points to the Websocket Server Url hosted in the Combilog Aggregator.
-url = "ws://localhost:1337"
+url = "ws://AGG_DOMAIN:AGG_SOCKET_PORT"
 
 # Secret of the service registered in the Combilog Dashboard
 secret = "MY-SPECIAL-SECRET"
