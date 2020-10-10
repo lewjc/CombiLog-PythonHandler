@@ -23,7 +23,7 @@ url = "ws://localhost:1337"
 secret = "MY-SPECIAL-SECRET"
 
 logger = logging.Logger("NamedService")
-handler = combilog_handler.loghandler.CombilogHandler(url, secret)
+handler = combilog_handler.loghandler.CombilogHandler(aggregator_url=url, service_secret=secret)
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 handler.setFormatter(formatter)
 logger.addHandler(handler)
