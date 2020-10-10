@@ -5,13 +5,13 @@ import threading
 import asyncio
 import time
 from queue import Queue
-from combilog.socketerror import get_closure_error
+from combilog_handler.socketerror import get_closure_error
 
 
 class CombilogHandler(Handler):
-    def __init__(self, aggreagtor_url: str, service_secret: str, logger: Logger = None):
+    def __init__(self, aggregator_url: str, service_secret: str, logger: Logger = None):
         Handler.__init__(self)
-        self._aggregator_url = aggreagtor_url
+        self._aggregator_url = aggregator_url
         self._service_secret = service_secret
         self._retry_timer = threading.Timer(7, self._retry_connect)
         self._message_queue = Queue()
