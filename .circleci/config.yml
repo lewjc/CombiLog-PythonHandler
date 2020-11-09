@@ -18,8 +18,16 @@ jobs:
           name: Init .pypirc
           command: echo -e "[pypi]" >> ~/.pypirc &&  echo -e "username = $PYPI_USER" >> ~/.pypirc && echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
       - run:
+          name: install python dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+      - run:
           name: Build Wheel
-          command: python3 setup.py sdist bdist_wheel
+          command: /
+            python3 -m venv venv
+            . venv/bin/activate
+            python3 setup.py sdist bdist_wheel
       - run:
           name: Publish to PYPI
           command: ./venv/bin/activate twine upload dist/*
