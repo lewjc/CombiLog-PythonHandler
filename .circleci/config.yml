@@ -4,10 +4,6 @@ version: 2.1
 # Orchestrate or schedule a set of jobs
 jobs:
   build:
-    environment:
-      - MAJOR_VERSION: 1
-      - MINOR_VERSION: 0
-      - PATCH_VERSION: 11
     docker:
       - image: circleci/python:3.6.4
     steps:
