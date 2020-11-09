@@ -1,0 +1,37 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+# Use a package of configuration called an orb.
+# Orchestrate or schedule a set of jobs
+jobs:
+  build:
+    environment:
+      - MAJOR_VERSION: 1
+      - MINOR_VERSION: 0
+      - PATCH_VERSION: 11
+    docker:
+      - image: circleci/python:3.6.4
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+        name: Init .pypirc
+        command: |
+          echo -e "[pypi]" >> ~/.pypirc
+          echo -e "username = $PYPI_USER" >> ~/.pypirc
+          echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
+      - run:
+        name: Build Wheel
+        command: python3 setup.py sdist bdist_wheel
+      - run:
+        name: Publish to PYPI
+        command: . venv/bin/activate twine upload dist/*
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build:
+        filters:
+          branches:
+            only:
+              - master
