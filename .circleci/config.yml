@@ -16,7 +16,7 @@ jobs:
           version: 19.03.13
       - run:
         name: Init .pypirc
-        command: |
+        command: >
           echo -e "[pypi]" >> ~/.pypirc
           echo -e "username = $PYPI_USER" >> ~/.pypirc
           echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
