@@ -22,7 +22,7 @@ jobs:
           command: python3 setup.py sdist bdist_wheel
       - run:
           name: Publish to PYPI
-          command: twine upload dist/*
+          command: python3 -m venv venv && ./venv/bin/activate twine upload dist/*
 workflows:
   version: 2
   build:
