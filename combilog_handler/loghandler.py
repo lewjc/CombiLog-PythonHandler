@@ -13,9 +13,9 @@ class CombilogHandler(Handler):
         Handler.__init__(self)
         self._aggregator_url = aggregator_url
         self._service_secret = service_secret
-        self._retry_timer = threading.Timer(7, self._retry_connect)
         self._message_queue = Queue()
         self._create_socket()
+        self._reconnecting = False
         self._socket_thread = self.__create_socket_thread()
         self._socket_thread.start()
 
@@ -28,22 +28,21 @@ class CombilogHandler(Handler):
             on_error=self._generate_on_error(),
         )
 
-    def _connect(self, socket: WebSocketApp):
+    def _connect(self):
         try:
-            socket.run_forever()
+            self._reconnecting = False;
+            self._websocket.run_forever()
         except WebSocketConnectionClosedException as e:
             print(e)
 
     def __create_socket_thread(self):
         return threading.Thread(
-            target=self._connect,
-            args=(self._websocket,),
+            target=self._connect,            
             daemon=True,
         )
 
     def _generate_on_open(self):
         def on_open(ws: WebSocket):
-            self._retry_timer.cancel()
             print("Combilog connection opened.")
             if not self._message_queue.empty():
                 while not self._message_queue.empty():
@@ -54,28 +53,25 @@ class CombilogHandler(Handler):
     def _generate_on_close(self):
         def on_close(ws, code=0, reason=None):
             closure_reason = get_closure_error(code)
-            print(
-                "Combilog aggreagtor connection was closed. Reason: {} Attempting reconnect in 5 seconds...".format(
-                    closure_reason
-                )
-            )
-            threading.Timer(5, self._retry_connect).start()
+            print("Combilog aggreagtor connection was closed. Reason: {} Attempting reconnect in 5 seconds...".format(closure_reason))
+            self._try_reconnect()
 
         return on_close
 
     def _generate_on_error(self):
         def on_error(ws: WebSocketApp, error: str):
-            print("Combilog aggreagtor connection errored: " + error)
-            threading.Timer(5, self._retry_connect).start()
+            print("Combilog aggregator connection errored: ".format(error))
+            self._try_reconnect()
 
         return on_error
 
-    def _retry_connect(self):
-        print("Attempting reconnection to Combilog Aggregator socket.")
+    def _try_reconnect(self):
+        if(not self._reconnecting):
+            self._reconnecting = True
+            threading.Timer(5, self._connect).start()
+        else:
+            print("Already attempting reconnection.")
 
-        self._create_socket()
-        self._socket_thread = self.__create_socket_thread()
-        self._socket_thread.start()
 
     def emit(self, record):
         try:
