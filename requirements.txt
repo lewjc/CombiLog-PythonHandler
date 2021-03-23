@@ -23,7 +23,6 @@ pathspec==0.8.0
 pkginfo==1.6.1
 pycparser==2.20
 Pygments==2.7.2
-pylint==2.6.0
 pyparsing==2.4.7
 pywin32-ctypes==0.2.0
 readme-renderer==28.0
