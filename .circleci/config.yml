@@ -11,6 +11,12 @@ jobs:
       - setup_remote_docker:
           version: 19.03.13
       - run:
+          name: Get Pip
+          command: curl https://bootstrap.pypa.io/get-pip.py -o ./get-pip.py && python3 ./get-pip.py
+      - run:
+          name: Install Twine
+          command: pip3 install twine
+      - run:
           name: Init .pypirc
           command: echo -e "[pypi]" >> ~/.pypirc &&  echo -e "username = $PYPI_USER" >> ~/.pypirc && echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
       - run:
@@ -18,10 +24,7 @@ jobs:
           command: python3 setup.py sdist bdist_wheel
       - run:
           name: Publish to PYPI
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip3 install -r requirements.txt
+          command: 
             twine upload dist/*
 workflows:
   version: 2
