@@ -59,8 +59,8 @@ class CombilogHandler(Handler):
         return on_close
 
     def _generate_on_error(self):
-        def on_error(ws: WebSocketApp, error: str):
-            print("Combilog aggregator connection errored: ".format(error))
+        def on_error(ws: WebSocketApp, error: str):            
+            print("Combilog aggregator connection errored: {}".format(error))
             self._try_reconnect()
 
         return on_error
@@ -69,8 +69,6 @@ class CombilogHandler(Handler):
         if(not self._reconnecting):
             self._reconnecting = True
             threading.Timer(5, self._connect).start()
-        else:
-            print("Already attempting reconnection.")
 
 
     def emit(self, record):
