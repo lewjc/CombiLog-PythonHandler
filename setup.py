@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="combilog-handler",  # Replace with your own username
-    version="1.0.15",
+    version="1.0.16",
     author="Lewis Cummins",
     author_email="lewisjcummins@hotmail.co.uk",
     description="Interfaces with inbuilt python logger to send logs to combilog aggregator.",
