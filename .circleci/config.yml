@@ -6,16 +6,19 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.6.4
+    e
     steps:
       - checkout
       - setup_remote_docker:
-          version: 19.03.13
+          version: 19.03.13  
       - run:
           name: Get Pip
           command: curl https://bootstrap.pypa.io/get-pip.py -o ./get-pip.py && python3 ./get-pip.py
       - run:
           name: Install Twine
-          command: pip3 install twine
+          command: |
+            pip3 install twine 
+            echo 'export PATH=/home/circleci/.local/bin:$PATH' >> $BASH_ENV
       - run:
           name: Init .pypirc
           command: echo -e "[pypi]" >> ~/.pypirc &&  echo -e "username = $PYPI_USER" >> ~/.pypirc && echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
