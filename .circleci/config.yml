@@ -23,8 +23,7 @@ jobs:
           command: echo -e "[pypi]" >> ~/.pypirc &&  echo -e "username = $PYPI_USER" >> ~/.pypirc && echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
       - run:
           name: Build Wheel
-          command: |
-          python3 setup.py sdist bdist_wheel
+          command: python3 setup.py sdist bdist_wheel
       - run:
           name: Publish to PYPI
           command: 
