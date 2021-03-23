@@ -6,7 +6,6 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.6.4
-    e
     steps:
       - checkout
       - setup_remote_docker:
